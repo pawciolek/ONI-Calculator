@@ -1,0 +1,9 @@
+{
+  "name" : "Bog Jelly",
+  "kcal_per_kg" : "1840",
+  "source" : "Bog Bucket",
+  "growth_speed" : {
+    "wild" : 26.4,
+    "domestic" : 6.6
+  }
+}
