@@ -1,0 +1,33 @@
+{
+  "Dishes" : [
+    {
+      "name" : "Barbeque",
+      "kcal per kg" : "4000",
+      "ingredient" : [
+        {
+          "name" : "Meat",
+          "amount" : "3200"
+        }
+      ],
+      "source" : "Electric Grill"
+    },
+    {
+      "name" : "Berry Sludge",
+      "kcal per kg" : "4000",
+      "ingredient" : [
+        {"name" : "Bristle Berry", "amount" : "1600"},
+        {"name" : "Sleet Wheat Grain", "amount" : "5"},
+        {"name" : "Megafrond Grain", "amount" : "5"}
+      ],
+      "source" : "Microbe Musher"
+    }
+  ],
+
+  "Plants" : [
+    {
+      "name" : "Bog Jelly",
+      "kcal per kg" : "1840",
+      "source" : "Bog Bucket"
+    }
+  ]
+}
