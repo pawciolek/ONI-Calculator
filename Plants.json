@@ -1,9 +1,241 @@
-{
-  "name" : "Bog Jelly",
-  "kcal_per_kg" : "1840",
-  "source" : "Bog Bucket",
-  "growth_speed" : {
-    "wild" : 26.4,
-    "domestic" : 6.6
+[
+  {
+    "name": "Bog Jelly",
+    "kcal_per_kg": 1840,
+    "source": "Bog Bucket",
+    "DLC" : "Space out",
+    "growth_speed": {
+      "wild": 26.4,
+      "domestic": 6.6
+    },
+    "Irrigation": [
+      {
+        "name": "polluted water",
+        "quantity": 20
+      }
+    ]
+  },
+  {
+    "name": "Bristle Berry",
+    "kcal_per_kg": 1600,
+    "source": "Bristle Blossom",
+    "growth_speed": {
+      "wild": 24,
+      "domestic": 6
+    },
+    "Irrigation": [
+      {
+        "name": "water",
+        "quantity": 20
+      }
+    ]
+  },
+  {
+    "name": "Grubfruit",
+    "kcal_per_kg": 2000,
+    "source": "Grubfruit Plant",
+    "DLC" : "Space out",
+    "Critter": [
+      {
+        "neme": "Sweetle",
+        "quantity per plant": 0.33
+      }
+    ],
+    "growth_speed": {
+      "wild": 32,
+      "domestic": 8
+    },
+    "Irrigation": [
+      {
+        "name": "Sulfur",
+        "quantity": 10
+      }
+    ]
+  },
+  {
+    "name": "Spindly Grubfruit",
+    "kcal_per_kg": 800,
+    "source": "Spindly Grubfruit Plant",
+    "DLC" : "Space out",
+    "growth_speed": {
+      "wild": 16,
+      "domestic": 4
+    },
+    "Irrigation": [
+      {
+        "name": "Sulfur",
+        "quantity": 10
+      }
+    ]
+  },
+  {
+    "name": "Lettuce",
+    "kcal_per_kg": 4800,
+    "source": "Waterweed",
+    "growth_speed": {
+      "wild": 48,
+      "domestic": 12
+    },
+    "Irrigation": [
+      {
+        "name": "Salt Water",
+        "quantity": 5
+      },
+      {
+        "name": "Bleach Stone",
+        "quantity": 500
+      }
+    ]
+  },
+  {
+    "name": "Meal Lice",
+    "kcal_per_kg": 600,
+    "source": "Mealwood",
+    "growth_speed": {
+      "wild": 12,
+      "domestic": 3
+    },
+    "Irrigation": [
+      {
+        "name": "Dirt",
+        "quantity": 10
+      }
+    ]
+  },
+  {
+    "name": "Megafrond Grain",
+    "kcal_per_kg": 36,
+    "source": "Mealwood",
+    "DLC" : "Prehistoric Planet Pack",
+    "growth_speed": {
+      "wild": 36,
+      "domestic": 9
+    },
+    "Irrigation": [
+      {
+        "name": "Chlorine Gas",
+        "quantity": 54
+      }
+    ]
+  },
+  {
+    "name": "Mushroom",
+    "kcal_per_kg": 2400,
+    "source": "Dusk Cap",
+    "growth_speed": {
+      "wild": 30,
+      "domestic": 7.5
+    },
+    "Irrigation": [
+      {
+        "name": "Slime",
+        "quantity": 4
+      }
+    ]
+  },
+  {
+    "name": "Nosh Bean",
+    "kcal_per_kg": 12,
+    "source": "Nosh Sprout",
+    "growth_speed": {
+      "wild": 84,
+      "domestic": 21
+    },
+    "Irrigation": [
+      {
+        "name": "Etanol",
+        "quantity": 20
+      },
+      {
+        "name": "Dirt",
+        "quantity": 5
+      }
+    ]
+  },
+  {
+    "name": "Pikeapple",
+    "DLC" : "Frosty Planet Pack",
+    "kcal_per_kg": 800,
+    "source": "Pikeapple Bush",
+    "growth_speed": {
+      "wild": 12,
+      "domestic": 3
+    },
+    "Irrigation": [
+      {
+        "name": "Phosphorite",
+        "quantity": 5
+      }
+    ]
+  },
+  {
+    "name": "Pincha Peppernut",
+    "kcal_per_kg": 4,
+    "source": "Pincha Pepper",
+    "growth_speed": {
+      "wild": 32,
+      "domestic": 8
+    },
+    "Irrigation": [
+      {
+        "name": "Phosphorite",
+        "quantity": 1
+      },
+      {
+        "name": "Polluted Water",
+        "quantity": 35
+      }
+    ]
+  },
+  {
+    "name": "Plume Squash",
+    "DLC" : "Frosty Planet Pack",
+    "kcal_per_kg": 4000,
+    "source": "Plume Squash Plant",
+    "growth_speed": {
+      "wild": 12,
+      "domestic": 3
+    },
+    "Irrigation": [
+      {
+        "name": "Ethanol",
+        "quantity": 15
+      }
+    ]
+  },
+  {
+    "name": "Sleet Wheat Grain",
+    "kcal_per_kg": 16,
+    "source": "Sleet Wheat",
+    "growth_speed": {
+      "wild": 12,
+      "domestic": 3
+    },
+    "Irrigation": [
+      {
+        "name": "Water",
+        "quantity": 20
+      },
+      {
+        "name": "Dirt",
+        "quantity": 5
+      }
+    ]
+  },
+  {
+    "name": "Sweatcorn",
+    "kcal_per_kg": 800,
+    "source": "Sweatcorn Stalk",
+    "DLC" : "Prehistoric Planet Pack",
+    "growth_speed": {
+      "wild": 12,
+      "domestic": 3
+    },
+    "Irrigation": [
+      {
+        "name": "Peat",
+        "quantity": 10
+      }
+    ]
   }
-}
+]
