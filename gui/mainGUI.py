@@ -21,17 +21,22 @@ class Ui_Dialog(object):
         self.main_HLayout.setSpacing(0)
         self.main_VLayout.addLayout(self.main_HLayout)
 
-        self.left_settings_widget = QtWidgets.QWidget()
         self.left_settings_comp = UI_leftSettings()
-        self.left_settings_comp.setupUi(self.left_settings_widget)
-        self.main_HLayout.addWidget(self.left_settings_widget)
+        self.main_HLayout.addWidget(self.left_settings_comp)
 
         self.right_VLayout = QtWidgets.QVBoxLayout()
         self.right_VLayout.setContentsMargins(0, 0, 0, 0)
+
         self.main_HLayout.addLayout(self.right_VLayout)
 
         self.top_nav_comp = Ui_topNavSelect(Dialog)
         self.right_VLayout.addWidget(self.top_nav_comp)
+
+        self.left_settings_comp.data_updated.connect(
+            self.top_nav_comp.selectFood.on_data_updated
+        )
+        initial = self.left_settings_comp.sorter.sort_by_dlc()
+        self.left_settings_comp.data_updated.emit(initial)
 
         # Dystans pionowy (spacer)
         spacerItem = QtWidgets.QSpacerItem(20, 1, QtWidgets.QSizePolicy.Policy.Minimum,

@@ -1,6 +1,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QFont, QFontDatabase
 
+from gui.settingsUI import UI_leftSettings
 from selectFoodComp import Ui_selectFood
 
 class Ui_topNavSelect(QtWidgets.QWidget):
@@ -12,8 +13,13 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         antonF = QFontDatabase.addApplicationFont("../src/assets/font/Anton-Regular.ttf")
         antonFont = QFontDatabase.applicationFontFamilies(antonF)
 
+        self.leftSettings = UI_leftSettings()
         self.selectFood = Ui_selectFood()
+
+
+        self.leftSettings.data_updated.connect(self.selectFood.on_data_updated)
         self.selectFood.overlay_hide_signal.connect(self.toggleVisibleOverlay)
+
 
         self.mainLayout = QtWidgets.QHBoxLayout()
         self.mainLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
@@ -234,12 +240,14 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.label_3.setObjectName("label_3")
         self.verticalLayout_3.addWidget(self.label_3)
         self.horizontalLayout_4.addLayout(self.verticalLayout_3)
-        self.setLayout(self.mainLayout)
+
 
         # Dodanie całego prawego layoutu do głównego
         self.horizontalLayout_7.addLayout(self.horizontalLayout_4)
-        self.mainLayout.addWidget(self.frame)
         self.frame.setLayout(self.horizontalLayout_7)
+        self.mainLayout.addWidget(self.frame)
+        self.setLayout(self.mainLayout)
+
 
         # Ustawienie tłumaczeń (dla późniejszej lokalizacji UI)
 
@@ -252,13 +260,13 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.overlay_HLayout.setContentsMargins(0, 0, 0, 0)
         self.overlay.setLayout(self.overlay_HLayout)
 
-        spacerItem2 = QtWidgets.QSpacerItem(350, 20, QtWidgets.QSizePolicy.Policy.Maximum,
+        spacerItem2 = QtWidgets.QSpacerItem(300, 20, QtWidgets.QSizePolicy.Policy.Maximum,
                                             QtWidgets.QSizePolicy.Policy.Minimum)
         self.overlay_HLayout.addItem(spacerItem2)
 
         self.overlay_HLayout.addWidget(self.selectFood)
 
-        spacerItem3 = QtWidgets.QSpacerItem(350, 20, QtWidgets.QSizePolicy.Policy.Maximum,
+        spacerItem3 = QtWidgets.QSpacerItem(300, 20, QtWidgets.QSizePolicy.Policy.Maximum,
                                             QtWidgets.QSizePolicy.Policy.Minimum)
         self.overlay_HLayout.addItem(spacerItem3)
 
@@ -286,3 +294,5 @@ class Ui_topNavSelect(QtWidgets.QWidget):
             self.overlay.show()
         else:
             self.overlay.hide()
+
+

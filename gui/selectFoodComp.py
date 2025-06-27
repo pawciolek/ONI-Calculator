@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QFontDatabase, QFont
 
+from src.DataLoader.dataDishesLoader import SortDishes
+
 
 class Ui_selectFood(QtWidgets.QWidget):
 
@@ -16,6 +18,10 @@ class Ui_selectFood(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        self.filtered_data = []
+
+
 
         antonF = QFontDatabase.addApplicationFont("../src/assets/font/Anton-Regular.ttf")
         antonFont = QFontDatabase.applicationFontFamilies(antonF)
@@ -131,90 +137,9 @@ class Ui_selectFood(QtWidgets.QWidget):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.frame_3 = QtWidgets.QFrame(parent=self.scrollAreaWidgetContents)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_3.sizePolicy().hasHeightForWidth())
-        self.frame_3.setSizePolicy(sizePolicy)
-        self.frame_3.setStyleSheet("background-color:#3D4358;\n"
-"border: 2px solid black;\n"
-"border-radius:4px;")
-        self.frame_3.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.frame_3.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.frame_3.setObjectName("frame_3")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_3)
-        self.verticalLayout_2.setContentsMargins(8, 16, 8, 16)
-        self.verticalLayout_2.setSpacing(16)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.label_5 = QtWidgets.QLabel(parent=self.frame_3)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
-        self.label_5.setSizePolicy(sizePolicy)
-        self.label_5.setStyleSheet("border:none;")
-        self.label_5.setText("")
-        self.label_5.setPixmap(QtGui.QPixmap("../src/assets/dishesIcon/img.png"))
-        self.label_5.setScaledContents(True)
-        self.label_5.setObjectName("label_5")
-        self.verticalLayout_2.addWidget(self.label_5)
-        self.label_6 = QtWidgets.QLabel(parent=self.frame_3)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_6.sizePolicy().hasHeightForWidth())
-        self.label_6.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(24)
-        self.label_6.setFont(font)
-        self.label_6.setStyleSheet("border:none;\n"
-"color:white;")
-        self.label_6.setObjectName("label_6")
-        self.verticalLayout_2.addWidget(self.label_6)
-        self.gridLayout_2.addWidget(self.frame_3, 0, 0, 1, 1)
-        self.frame_4 = QtWidgets.QFrame(parent=self.scrollAreaWidgetContents)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_4.sizePolicy().hasHeightForWidth())
-        self.frame_4.setSizePolicy(sizePolicy)
-        self.frame_4.setStyleSheet("background-color:#3D4358;\n"
-"border: 2px solid black;\n"
-"border-radius:4px;")
-        self.frame_4.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.frame_4.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.frame_4.setObjectName("frame_4")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_4)
-        self.verticalLayout_3.setContentsMargins(8, 16, 8, 16)
-        self.verticalLayout_3.setSpacing(16)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.label_7 = QtWidgets.QLabel(parent=self.frame_4)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_7.sizePolicy().hasHeightForWidth())
-        self.label_7.setSizePolicy(sizePolicy)
-        self.label_7.setStyleSheet("border:none;")
-        self.label_7.setText("")
-        self.label_7.setPixmap(QtGui.QPixmap("../src/assets/dishesIcon/img.png"))
-        self.label_7.setScaledContents(True)
-        self.label_7.setObjectName("label_7")
-        self.verticalLayout_3.addWidget(self.label_7)
-        self.label_8 = QtWidgets.QLabel(parent=self.frame_4)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_8.sizePolicy().hasHeightForWidth())
-        self.label_8.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(24)
-        self.label_8.setFont(font)
-        self.label_8.setStyleSheet("border:none;\n"
-"color:white;")
-        self.label_8.setObjectName("label_8")
-        self.verticalLayout_3.addWidget(self.label_8)
-        self.gridLayout_2.addWidget(self.frame_4, 0, 1, 1, 1)
+
+
+
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
         self.verticalLayout_4.addLayout(self.verticalLayout)
@@ -226,8 +151,95 @@ class Ui_selectFood(QtWidgets.QWidget):
         _translate = QtCore.QCoreApplication.translate
         self.label.setText(_translate("Form", "Select Food"))
         self.textEdit.setPlaceholderText(_translate("Form", "Search"))
-        self.label_6.setText(_translate("Form", "BARBEQUE"))
-        self.label_8.setText(_translate("Form", "BARBEQUE"))
 
     def set_overlay_signal(self):
         self.overlay_hide_signal.emit()
+
+    def on_data_updated(self, data: list):
+        """Slot wywoływany, gdy UI_leftSettings wyemituje nowe dane"""
+        # 1) zaktualizuj dane
+        self.filtered_data = data
+        # 2) wyczyść grid
+        self._clear_grid()
+        # 3) odrysuj karty
+        self.create_sorted_food()
+
+
+    def _clear_grid(self):
+        """Usuń wszystkie widgety z gridLayout_2"""
+        while self.gridLayout_2.count():
+            item = self.gridLayout_2.takeAt(0)
+            w = item.widget()
+            if w:
+                # usuń z hierarchii i pozwól GC je wyczyścić
+                w.setParent(None)
+                w.deleteLater()
+
+    def create_sorted_food(self):
+        antonF = QFontDatabase.addApplicationFont("../src/assets/font/Anton-Regular.ttf")
+        antonFont = QFontDatabase.applicationFontFamilies(antonF)
+
+        #self.filtered_data = self.sorted_food.sort_by_dlc()
+
+
+        row = 0
+        col = 0
+
+        for dlc in self.filtered_data:
+            for dish in dlc["Dishes"]:
+                frame_card_food = QtWidgets.QFrame()
+                sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding,
+                                                   QtWidgets.QSizePolicy.Policy.Expanding)
+                sizePolicy.setHeightForWidth(frame_card_food.sizePolicy().hasHeightForWidth())
+                frame_card_food.setSizePolicy(sizePolicy)
+                frame_card_food.setStyleSheet("background-color:#3D4358;\n"
+                                           "border: 2px solid black;\n"
+                                           "border-radius:4px;")
+                frame_card_food.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+                frame_card_food.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+
+                self.verticalLayout_card = QtWidgets.QVBoxLayout(frame_card_food)
+                self.verticalLayout_card.setContentsMargins(8, 32, 8, 32)
+                self.verticalLayout_card.setSpacing(32)
+
+                self.horziontalLayout_icon = QtWidgets.QHBoxLayout(frame_card_food)
+                self.horziontalLayout_icon.setContentsMargins(0, 0, 0, 0)
+                self.horziontalLayout_icon.setSpacing(0)
+
+                self.label_icon = QtWidgets.QLabel(parent=frame_card_food)
+                sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred,
+                                                   QtWidgets.QSizePolicy.Policy.Maximum)
+                sizePolicy.setHeightForWidth(self.label_icon.sizePolicy().hasHeightForWidth())
+                self.label_icon.setSizePolicy(sizePolicy)
+                self.label_icon.setMaximumSize(150, 1000)
+
+                self.label_icon.setStyleSheet("border:none;")
+                self.label_icon.setPixmap(QtGui.QPixmap("../src/assets/dishesIcon/img.png"))
+                self.label_icon.setScaledContents(True)
+                self.horziontalLayout_icon.addWidget(self.label_icon)
+                self.verticalLayout_card.addLayout(self.horziontalLayout_icon)
+
+                self.label_title = QtWidgets.QLabel(parent=frame_card_food)
+                sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred,
+                                                   QtWidgets.QSizePolicy.Policy.Maximum)
+                sizePolicy.setHeightForWidth(self.label_title.sizePolicy().hasHeightForWidth())
+                self.label_title.setSizePolicy(sizePolicy)
+                self.label_title.setFont(QFont(antonFont, 16))
+                self.label_title.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                self.label_title.setStyleSheet("border:none;\n"
+                                           "color:white;")
+                self.label_title.setText(dish['name'])
+                self.verticalLayout_card.addWidget(self.label_title)
+                frame_card_food.setLayout(self.verticalLayout_card)
+                self.gridLayout_2.addWidget(frame_card_food, row, col)
+
+                col += 1
+                if col >= 3:
+                    col = 0
+                    row += 1
+
+
+
+
+
+
