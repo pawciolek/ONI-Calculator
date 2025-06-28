@@ -16,10 +16,9 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.leftSettings = UI_leftSettings()
         self.selectFood = Ui_selectFood()
 
-
         self.leftSettings.data_updated.connect(self.selectFood.on_data_updated)
         self.selectFood.overlay_hide_signal.connect(self.toggleVisibleOverlay)
-
+        self.selectFood.selected_name_btn.connect(self.change_name_btn)
 
         self.mainLayout = QtWidgets.QHBoxLayout()
         self.mainLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
@@ -70,26 +69,28 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.line.setLineWidth(2)
         self.line.setFrameShape(QtWidgets.QFrame.Shape.VLine)
         self.line.setObjectName("line")
+        self.line.hide()
         self.horizontalLayout_6.addWidget(self.line)
 
         # Layout na tekst po prawej od przycisku
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setSpacing(8)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
 
         # Duża etykieta z wartością
-        self.label_5 = QtWidgets.QLabel()
-        self.label_5.setFont(QFont(antonFont[0], 24))
-        self.label_5.setStyleSheet("color:white;")
-        self.label_5.setObjectName("label_5")
-        self.horizontalLayout_5.addWidget(self.label_5)
+        self.label_kcal = QtWidgets.QLabel()
+        self.label_kcal.setFont(QFont(antonFont[0], 24))
+        self.label_kcal.setStyleSheet("color:white;")
+        self.label_kcal.setObjectName("label_5")
+        self.horizontalLayout_5.addWidget(self.label_kcal)
 
         # Layout pionowy z drugą etykietą (np. jednostką)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_4.setContentsMargins(-1, -1, -1, 15)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 12)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
 
         # Dystans pionowy (spacer)
-        spacerItem = QtWidgets.QSpacerItem(20, 18, QtWidgets.QSizePolicy.Policy.Minimum,
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum,
                                            QtWidgets.QSizePolicy.Policy.Maximum)
         self.verticalLayout_4.addItem(spacerItem)
 
@@ -275,9 +276,7 @@ class Ui_topNavSelect(QtWidgets.QWidget):
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.selectBtnFood.setText(_translate("Form", "SELECT DISHES"))
-        self.label_5.setText(_translate("Form", "4000"))
-        self.label_4.setText(_translate("Form", "Kcal Per Kg"))
+
         self.toolButton.setText(_translate("Form", "..."))
         self.label.setText(_translate("Form", "In pot"))
         self.toolButton_2.setText(_translate("Form", "..."))
@@ -294,5 +293,20 @@ class Ui_topNavSelect(QtWidgets.QWidget):
             self.overlay.show()
         else:
             self.overlay.hide()
+
+    def change_name_btn(self, name_list):
+        if name_list:
+            self.selectBtnFood.setText(name_list[0])
+            self.label_kcal.setText(str(name_list[1]))
+            if name_list[1]:
+                self.label_4.setText("Kcal Per Kg")
+                self.line.show()
+            else:
+                self.label_4.setText("")
+        else:
+            self.selectBtnFood.setText("SELECT DISH")
+            self.label_kcal.setText("")
+
+
 
 
