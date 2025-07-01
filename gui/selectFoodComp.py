@@ -8,27 +8,48 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QFontDatabase, QFont
+from PyQt6.QtWidgets import QGraphicsOpacityEffect
 
 from src.DataLoader.dataDishesLoader import SortDishes
+from src.DataLoader.selected_dish_data import Selected_dish_data
 
 
 class Ui_selectFood(QtWidgets.QWidget):
 
     overlay_hide_signal = QtCore.pyqtSignal()
+    selected_name_btn = QtCore.pyqtSignal(list)
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
         self.filtered_data = []
+        self.cards = []
+        self.selected_dishes = Selected_dish_data()
 
-
+        self.selected_card = None
+        self.default_card_style = """
+            QFrame {
+                background-color: #3D4358;
+                border: 2px solid black;
+                border-radius: 4px;
+            }
+            QFrame:hover {
+                background-color: #505670;
+            }
+        """
+        self.selected_card_style = """
+            QFrame {
+                background-color: #636a87;
+                border: 2px solid black;
+                border-radius: 4px;
+            }
+        """
 
         antonF = QFontDatabase.addApplicationFont("../src/assets/font/Anton-Regular.ttf")
         antonFont = QFontDatabase.applicationFontFamilies(antonF)
 
         self.setStyleSheet("background-color:#21252F;")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
 
         self.frame_title = QtWidgets.QFrame()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
@@ -42,12 +63,10 @@ class Ui_selectFood(QtWidgets.QWidget):
                                         "padding: 4px 8px;")
         self.frame_title.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.frame_title.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.frame_title.setObjectName("frame")
 
         self.horizontalLayout_frame = QtWidgets.QHBoxLayout(self.frame_title)
         self.horizontalLayout_frame.setContentsMargins(8, 4, 0, 4)
         self.horizontalLayout_frame.setSpacing(4)
-        self.horizontalLayout_frame.setObjectName("horizontalLayout_2")
 
         self.label = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
@@ -60,7 +79,6 @@ class Ui_selectFood(QtWidgets.QWidget):
                                  "border:none;\n"
                                  "padding:0 0 0 0;")
         self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.label.setObjectName("label")
         self.horizontalLayout_frame.addWidget(self.label)
 
         self.closeSelectBtn = QtWidgets.QToolButton()
@@ -79,7 +97,6 @@ class Ui_selectFood(QtWidgets.QWidget):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
         self.verticalLayout.setContentsMargins(8, -1, 8, -1)
-        self.verticalLayout.setObjectName("verticalLayout")
         self.frame = QtWidgets.QFrame()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -95,7 +112,6 @@ class Ui_selectFood(QtWidgets.QWidget):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.frame)
         self.horizontalLayout_2.setContentsMargins(8, 4, 8, 4)
         self.horizontalLayout_2.setSpacing(4)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_2 = QtWidgets.QLabel(parent=self.frame)
         self.label_2.setMaximumSize(QtCore.QSize(24, 24))
         self.label_2.setStyleSheet("border:none;")
@@ -104,21 +120,23 @@ class Ui_selectFood(QtWidgets.QWidget):
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout_2.addWidget(self.label_2)
-        self.textEdit = QtWidgets.QTextEdit(parent=self.frame)
+
+        # ---- Search input ----
+        self.searchInput = QtWidgets.QPlainTextEdit(parent=self.frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
-        self.textEdit.setSizePolicy(sizePolicy)
-        self.textEdit.setMaximumSize(QtCore.QSize(16777215, 38))
+        sizePolicy.setHeightForWidth(self.searchInput.sizePolicy().hasHeightForWidth())
+        self.searchInput.setSizePolicy(sizePolicy)
+        self.searchInput.setMaximumSize(QtCore.QSize(16777215, 38))
         font = QtGui.QFont()
         font.setPointSize(16)
-        self.textEdit.setFont(font)
-        self.textEdit.setStyleSheet("background-color:transparent;\n"
+        self.searchInput.setFont(font)
+        self.searchInput.setStyleSheet("background-color:transparent;\n"
 "color:white;\n"
 "border:none;")
-        self.textEdit.setObjectName("textEdit")
-        self.horizontalLayout_2.addWidget(self.textEdit)
+
+        self.searchInput.textChanged.connect(self.search_dishes)
+
+        self.horizontalLayout_2.addWidget(self.searchInput)
         self.verticalLayout.addWidget(self.frame)
         self.scrollArea = QtWidgets.QScrollArea()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -131,15 +149,12 @@ class Ui_selectFood(QtWidgets.QWidget):
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 778, 494))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+
+        # ---- grid ----
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-
-
-
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
         self.verticalLayout_4.addLayout(self.verticalLayout)
@@ -150,23 +165,44 @@ class Ui_selectFood(QtWidgets.QWidget):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.label.setText(_translate("Form", "Select Food"))
-        self.textEdit.setPlaceholderText(_translate("Form", "Search"))
+        self.searchInput.setPlaceholderText(_translate("Form", "Search"))
 
     def set_overlay_signal(self):
+        """close Ui_selectFood and clear input text"""
         self.overlay_hide_signal.emit()
+        self.searchInput.clear()
 
     def on_data_updated(self, data: list):
-        """Slot wywoływany, gdy UI_leftSettings wyemituje nowe dane"""
-        # 1) zaktualizuj dane
+        """Slot called, when UI_leftSettings emit new data"""
         self.filtered_data = data
-        # 2) wyczyść grid
+        self.cards.clear()
         self._clear_grid()
-        # 3) odrysuj karty
+
+        # Check if the selected dish still exists
+        still_exists = False
+        if self.selected_dishes.exists():
+            selected_name = self.selected_dishes.get_selected()["name"]
+            for dlc in data:
+                for dish in dlc.get("Dishes", []):
+                    if dish["name"] == selected_name:
+                        still_exists = True
+                        break
+                if still_exists:
+                    break
+
+        # Reset if not found
+        if not still_exists:
+            if self.selected_card:
+                self.selected_card.setStyleSheet(self.default_card_style)
+                self.selected_card.setGraphicsEffect(None)
+            self.selected_card = None
+            self.selected_dishes.clear()
+            self.selected_name_btn.emit(["SELECT DISH", ""])
+
         self.create_sorted_food()
 
-
     def _clear_grid(self):
-        """Usuń wszystkie widgety z gridLayout_2"""
+        """Remove all widget from gridLayout_2"""
         while self.gridLayout_2.count():
             item = self.gridLayout_2.takeAt(0)
             w = item.widget()
@@ -179,11 +215,7 @@ class Ui_selectFood(QtWidgets.QWidget):
         antonF = QFontDatabase.addApplicationFont("../src/assets/font/Anton-Regular.ttf")
         antonFont = QFontDatabase.applicationFontFamilies(antonF)
 
-        #self.filtered_data = self.sorted_food.sort_by_dlc()
-
-
-        row = 0
-        col = 0
+        row = col = 0
 
         for dlc in self.filtered_data:
             for dish in dlc["Dishes"]:
@@ -192,11 +224,14 @@ class Ui_selectFood(QtWidgets.QWidget):
                                                    QtWidgets.QSizePolicy.Policy.Expanding)
                 sizePolicy.setHeightForWidth(frame_card_food.sizePolicy().hasHeightForWidth())
                 frame_card_food.setSizePolicy(sizePolicy)
-                frame_card_food.setStyleSheet("background-color:#3D4358;\n"
-                                           "border: 2px solid black;\n"
-                                           "border-radius:4px;")
+                frame_card_food.setStyleSheet(self.default_card_style)
                 frame_card_food.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
                 frame_card_food.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+
+                frame_card_food.mousePressEvent = lambda event, w=frame_card_food, d=dish: self.handle_card_clicked(w, d)
+
+                if self.selected_dishes.has_dish_name(dish["name"]):
+                    self.select_card_visual(frame_card_food)
 
                 self.verticalLayout_card = QtWidgets.QVBoxLayout(frame_card_food)
                 self.verticalLayout_card.setContentsMargins(8, 32, 8, 32)
@@ -216,6 +251,10 @@ class Ui_selectFood(QtWidgets.QWidget):
                 self.label_icon.setStyleSheet("border:none;")
                 self.label_icon.setPixmap(QtGui.QPixmap("../src/assets/dishesIcon/img.png"))
                 self.label_icon.setScaledContents(True)
+                self.label_icon.setStyleSheet(
+                    "background-color:transparent;\n"
+                    "border:none;\n"
+                    "color:white;")
                 self.horziontalLayout_icon.addWidget(self.label_icon)
                 self.verticalLayout_card.addLayout(self.horziontalLayout_icon)
 
@@ -226,19 +265,75 @@ class Ui_selectFood(QtWidgets.QWidget):
                 self.label_title.setSizePolicy(sizePolicy)
                 self.label_title.setFont(QFont(antonFont, 16))
                 self.label_title.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                self.label_title.setStyleSheet("border:none;\n"
-                                           "color:white;")
+                self.label_title.setStyleSheet(
+                    "background-color:transparent;\n"
+                    "border:none;\n"
+                    "color:white;")
                 self.label_title.setText(dish['name'])
                 self.verticalLayout_card.addWidget(self.label_title)
                 frame_card_food.setLayout(self.verticalLayout_card)
                 self.gridLayout_2.addWidget(frame_card_food, row, col)
+
+                # Append to cards list single card data
+                self.cards.append({
+                    "widget": frame_card_food,
+                    "name": dish["name"].lower()
+                })
 
                 col += 1
                 if col >= 3:
                     col = 0
                     row += 1
 
+    def handle_card_clicked(self, widget, dish_data):
+        self.select_card_visual(widget)
+        self.selected_dishes.set_selected_dish(dish_data)
+        self.selected_dishes.checkData()
 
+        self.selected_name_btn.emit([dish_data["name"], dish_data["kcal_per_kg"]])
+        self.set_overlay_signal()
+
+    def select_card_visual(self, widget):
+        if self.selected_card is not None:
+            self.selected_card.setStyleSheet(self.default_card_style)
+            self.selected_card.setGraphicsEffect(None)
+
+        self.selected_card = widget
+        self.selected_card.setStyleSheet(self.selected_card_style)
+
+
+    def search_dishes(self):
+        """
+            Function for searching elements in the grid by dish name
+
+        :return: searched item, hidden other items, sliding to searched item
+        """
+        query = self.searchInput.toPlainText().strip().lower()
+
+        if not query:
+            for card in self.cards:
+                card["widget"].setGraphicsEffect(None)
+            self.scrollArea.verticalScrollBar().setValue(0)
+            return
+
+        first_match = None
+
+        for card in self.cards:
+            name = card["name"]
+            widget = card["widget"]
+
+            if query and query in name:
+                widget.setGraphicsEffect(None)
+                if first_match is None:
+                    first_match = widget
+            else:
+                effect = QGraphicsOpacityEffect(widget)
+                effect.setOpacity(0.3)
+                widget.setGraphicsEffect(effect)
+
+        if first_match:
+            self.scrollArea.ensureWidgetVisible(first_match,
+                                                xMargin=20, yMargin=20)
 
 
 
