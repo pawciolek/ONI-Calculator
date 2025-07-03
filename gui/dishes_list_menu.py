@@ -14,7 +14,7 @@ from src.DataLoader.dataDishesLoader import SortDishes
 from src.DataLoader.selected_dish_data import Selected_dish_data
 
 
-class Ui_selectFood(QtWidgets.QWidget):
+class Dishes_menu(QtWidgets.QWidget):
 
     overlay_hide_signal = QtCore.pyqtSignal()
     selected_name_btn = QtCore.pyqtSignal(list)
@@ -169,6 +169,7 @@ class Ui_selectFood(QtWidgets.QWidget):
 
     def set_overlay_signal(self):
         """close Ui_selectFood and clear input text"""
+
         self.overlay_hide_signal.emit()
         self.searchInput.clear()
 
