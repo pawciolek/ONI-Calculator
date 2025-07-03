@@ -1,22 +1,22 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QFont, QFontDatabase
 
-from gui.settingsUI import UI_leftSettings
-from selectFoodComp import Ui_selectFood
+from gui.left_settings_panel import Left_settings_panel
+from dishes_list_menu import Dishes_menu
 
-class Ui_topNavSelect(QtWidgets.QWidget):
+class Top_select_panel(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         # Ustawienie podstawowych właściwości formularza
 
-
+        # main font
         antonF = QFontDatabase.addApplicationFont("../src/assets/font/Anton-Regular.ttf")
         antonFont = QFontDatabase.applicationFontFamilies(antonF)
 
-        self.leftSettings = UI_leftSettings()
-        self.selectFood = Ui_selectFood()
+        self.left_panel = Left_settings_panel()
+        self.selectFood = Dishes_menu()
 
-        self.leftSettings.data_updated.connect(self.selectFood.on_data_updated)
+        self.left_panel.data_updated.connect(self.selectFood.on_data_updated)
         self.selectFood.overlay_hide_signal.connect(self.toggleVisibleOverlay)
         self.selectFood.selected_name_btn.connect(self.change_name_btn)
 
@@ -25,12 +25,10 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
         self.mainLayout.setSpacing(0)
 
-        # Główna pozioma ramka (layout)
+        # Main Frame
 
         self.frame = QtWidgets.QFrame()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
         self.frame.setSizePolicy(sizePolicy)
         self.frame.setStyleSheet("background-color:#21252F;")
@@ -51,17 +49,18 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.horizontalLayout_6.setSpacing(16)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
 
-        # Przycisk "Select Dishes"
+        # btn "Select Dishes"
         self.selectBtnFood = QtWidgets.QPushButton()
 
         self.selectBtnFood.setFont(QFont(antonFont[0], 36))
         self.selectBtnFood.setStyleSheet("color:white;\nborder:none;")
         self.selectBtnFood.setObjectName("pushButton")
 
+        # open food list
+
         self.selectBtnFood.clicked.connect(self.toggleVisibleOverlay)
         self.horizontalLayout_6.addWidget(self.selectBtnFood)
 
-        # Pionowa linia oddzielająca
         self.line = QtWidgets.QFrame()
         self.line.setMaximumSize(QtCore.QSize(16777215, 30))
         self.line.setStyleSheet("background-color:#3D4358;\ncolor:#3D4358;")
@@ -72,19 +71,18 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.line.hide()
         self.horizontalLayout_6.addWidget(self.line)
 
-        # Layout na tekst po prawej od przycisku
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setSpacing(8)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
 
-        # Duża etykieta z wartością
-        self.label_kcal = QtWidgets.QLabel()
-        self.label_kcal.setFont(QFont(antonFont[0], 24))
-        self.label_kcal.setStyleSheet("color:white;")
-        self.label_kcal.setObjectName("label_5")
-        self.horizontalLayout_5.addWidget(self.label_kcal)
+        # ---- label displaying the amount of calories ---
+        self.kcal_amount_label = QtWidgets.QLabel()
+        self.kcal_amount_label.setFont(QFont(antonFont[0], 24))
+        self.kcal_amount_label.setStyleSheet("color:white;")
+        self.kcal_amount_label.setObjectName("label_5")
+        self.horizontalLayout_5.addWidget(self.kcal_amount_label)
 
-        # Layout pionowy z drugą etykietą (np. jednostką)
+        # --------
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 12)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -94,19 +92,18 @@ class Ui_topNavSelect(QtWidgets.QWidget):
                                            QtWidgets.QSizePolicy.Policy.Maximum)
         self.verticalLayout_4.addItem(spacerItem)
 
-        # Druga etykieta, np. "Kcal per Kg"
-        self.label_4 = QtWidgets.QLabel()
-        self.label_4.setFont(QFont(antonFont[0], 16))
-        self.label_4.setStyleSheet("color:#D8D8D8;")
-        self.label_4.setObjectName("label_4")
-        self.verticalLayout_4.addWidget(self.label_4)
+        # ---- second label displaying units of calories ----
+        self.kcal_units_label = QtWidgets.QLabel()
+        self.kcal_units_label.setFont(QFont(antonFont[0], 16))
+        self.kcal_units_label.setStyleSheet("color:#D8D8D8;")
+        self.verticalLayout_4.addWidget(self.kcal_units_label)
 
         self.horizontalLayout_5.addLayout(self.verticalLayout_4)
         self.horizontalLayout_6.addLayout(self.horizontalLayout_5)
 
         self.horizontalLayout_7.addLayout(self.horizontalLayout_6)
 
-        # Dystans między lewą a prawą stroną (rozszerzalny)
+        # distance between left and right side
         spacerItem1 = QtWidgets.QSpacerItem(163, 20, QtWidgets.QSizePolicy.Policy.Expanding,
                                             QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem1)
@@ -116,7 +113,7 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.horizontalLayout_4.setSpacing(16)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
 
-        # Pierwszy zestaw: przycisk + podpis "In pot"
+        # first set: button + label "In pot"
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -126,10 +123,12 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.toolButton = QtWidgets.QToolButton()
-        self.toolButton.setStyleSheet("border: none;")
 
-        # Ikony do przycisku "In pot"
+        # ---- Button "In Pot" ----
+        self.potted_select_btn = QtWidgets.QToolButton() # self.potted_selection_button - > variable name
+        self.potted_select_btn.setStyleSheet("border: none;")
+
+        # Button icon
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("../src/assets/btn/optionHarvest/btnImgPot.png"), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
@@ -139,26 +138,26 @@ class Ui_topNavSelect(QtWidgets.QWidget):
                        QtGui.QIcon.State.Off)
         icon.addPixmap(QtGui.QPixmap("../src/assets/btn/optionHarvest/btnImgPotClicked.png"), QtGui.QIcon.Mode.Selected,
                        QtGui.QIcon.State.On)
-        self.toolButton.setIcon(icon)
-        self.toolButton.setIconSize(QtCore.QSize(42, 40))
-        self.toolButton.setCheckable(True)
-        self.toolButton.setObjectName("toolButton")
-        self.horizontalLayout.addWidget(self.toolButton)
+        self.potted_select_btn.setIcon(icon)
+        self.potted_select_btn.setIconSize(QtCore.QSize(42, 40))
+        self.potted_select_btn.setCheckable(True)
+
+        self.horizontalLayout.addWidget(self.potted_select_btn)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        # Podpis pod przyciskiem
-        self.label = QtWidgets.QLabel()
+        # label name under button
+        self.potted_label = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setFont(QFont(antonFont[0], 12))
-        self.label.setStyleSheet("color: white;")
-        self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label)
+        sizePolicy.setHeightForWidth(self.potted_label.sizePolicy().hasHeightForWidth())
+        self.potted_label.setSizePolicy(sizePolicy)
+        self.potted_label.setFont(QFont(antonFont[0], 12))
+        self.potted_label.setStyleSheet("color: white;")
+        self.potted_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.potted_label)
         self.horizontalLayout_4.addLayout(self.verticalLayout)
 
-        # Drugi zestaw: przycisk + podpis "Fertilizer"
+        # Second set: button + label "Fertilizer"
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -168,10 +167,12 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.horizontalLayout_2.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.toolButton_2 = QtWidgets.QToolButton()
-        self.toolButton_2.setStyleSheet("border: none;")
 
-        # Ikony przycisku "Fertilizer"
+        # ---- Button "Fertilizer" ----
+        self.Fertilizer_select_btn = QtWidgets.QToolButton() # self.Fertilizer_select_btn - > variable name
+        self.Fertilizer_select_btn.setStyleSheet("border: none;")
+
+        # Button icon "Fertilizer"
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("../src/assets/btn/optionHarvest/btnImgFertilizer.png"), QtGui.QIcon.Mode.Normal,
                         QtGui.QIcon.State.Off)
@@ -181,26 +182,24 @@ class Ui_topNavSelect(QtWidgets.QWidget):
                         QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.Off)
         icon1.addPixmap(QtGui.QPixmap("../src/assets/btn/optionHarvest/btnImgFertilizerClicked.png"),
                         QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.On)
-        self.toolButton_2.setIcon(icon1)
-        self.toolButton_2.setIconSize(QtCore.QSize(42, 40))
-        self.toolButton_2.setCheckable(True)
-        self.toolButton_2.setObjectName("toolButton_2")
-        self.horizontalLayout_2.addWidget(self.toolButton_2)
+        self.Fertilizer_select_btn.setIcon(icon1)
+        self.Fertilizer_select_btn.setIconSize(QtCore.QSize(42, 40))
+        self.Fertilizer_select_btn.setCheckable(True)
+        self.horizontalLayout_2.addWidget(self.Fertilizer_select_btn)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
-        # Podpis "Fertilizer"
-        self.label_2 = QtWidgets.QLabel()
+        # label name "Fertilizer"
+        self.Fertilizer_label = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setFont(QFont(antonFont[0], 12))
-        self.label_2.setStyleSheet("color: white;")
-        self.label_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout_2.addWidget(self.label_2)
+        sizePolicy.setHeightForWidth(self.Fertilizer_label.sizePolicy().hasHeightForWidth())
+        self.Fertilizer_label.setSizePolicy(sizePolicy)
+        self.Fertilizer_label.setFont(QFont(antonFont[0], 12))
+        self.Fertilizer_label.setStyleSheet("color: white;")
+        self.Fertilizer_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_2.addWidget(self.Fertilizer_label)
         self.horizontalLayout_4.addLayout(self.verticalLayout_2)
 
-        # Trzeci zestaw: przycisk + podpis "Wild"
+        # third set: button + label "Wild"
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -210,10 +209,12 @@ class Ui_topNavSelect(QtWidgets.QWidget):
         self.horizontalLayout_3.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.toolButton_3 = QtWidgets.QToolButton()
-        self.toolButton_3.setStyleSheet("border: none;")
 
-        # Ikony przycisku "Wild"
+        # --- Button "Wild" ----
+        self.wild_select_btn = QtWidgets.QToolButton() # self.wild_select_btn - > variable name
+        self.wild_select_btn.setStyleSheet("border: none;")
+
+        # Button icon "Wild"
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("../src/assets/btn/optionHarvest/btnImgWild.png"), QtGui.QIcon.Mode.Normal,
                         QtGui.QIcon.State.Off)
@@ -223,35 +224,31 @@ class Ui_topNavSelect(QtWidgets.QWidget):
                         QtGui.QIcon.State.Off)
         icon2.addPixmap(QtGui.QPixmap("../src/assets/btn/optionHarvest/btnImgWildClicked.png"),
                         QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.On)
-        self.toolButton_3.setIcon(icon2)
-        self.toolButton_3.setIconSize(QtCore.QSize(42, 40))
-        self.toolButton_3.setCheckable(True)
-        self.toolButton_3.setObjectName("toolButton_3")
-        self.horizontalLayout_3.addWidget(self.toolButton_3)
+        self.wild_select_btn.setIcon(icon2)
+        self.wild_select_btn.setIconSize(QtCore.QSize(42, 40))
+        self.wild_select_btn.setCheckable(True)
+        self.wild_select_btn.setObjectName("toolButton_3")
+        self.horizontalLayout_3.addWidget(self.wild_select_btn)
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
 
-        # Podpis "Wild"
-        self.label_3 = QtWidgets.QLabel()
+        # label name "Wild"
+        self.wild_label = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setFont(QFont(antonFont[0], 12))
-        self.label_3.setStyleSheet("color: white;")
-        self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout_3.addWidget(self.label_3)
+        sizePolicy.setHeightForWidth(self.wild_label.sizePolicy().hasHeightForWidth())
+        self.wild_label.setSizePolicy(sizePolicy)
+        self.wild_label.setFont(QFont(antonFont[0], 12))
+        self.wild_label.setStyleSheet("color: white;")
+        self.wild_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.wild_label.setObjectName("label_3")
+        self.verticalLayout_3.addWidget(self.wild_label)
         self.horizontalLayout_4.addLayout(self.verticalLayout_3)
 
-
-        # Dodanie całego prawego layoutu do głównego
         self.horizontalLayout_7.addLayout(self.horizontalLayout_4)
         self.frame.setLayout(self.horizontalLayout_7)
         self.mainLayout.addWidget(self.frame)
         self.setLayout(self.mainLayout)
 
-
-        # Ustawienie tłumaczeń (dla późniejszej lokalizacji UI)
-
+        # overlay to show food list menu
         self.overlay = QtWidgets.QWidget(self.parent())
         self.overlay.setStyleSheet("background-color: rgba(0, 0, 0, 0.5)")
         self.overlay.setGeometry(0, 0, self.parent().width(), self.parent().height())
@@ -277,35 +274,49 @@ class Ui_topNavSelect(QtWidgets.QWidget):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
 
-        self.toolButton.setText(_translate("Form", "..."))
-        self.label.setText(_translate("Form", "In pot"))
-        self.toolButton_2.setText(_translate("Form", "..."))
-        self.label_2.setText(_translate("Form", "FertilIzer"))
-        self.toolButton_3.setText(_translate("Form", "..."))
-        self.label_3.setText(_translate("Form", "wild"))
+        self.potted_select_btn.setText(_translate("Form", "..."))
+        self.potted_label.setText(_translate("Form", "In pot"))
+        self.Fertilizer_select_btn.setText(_translate("Form", "..."))
+        self.Fertilizer_label.setText(_translate("Form", "FertilIzer"))
+        self.wild_select_btn.setText(_translate("Form", "..."))
+        self.wild_label.setText(_translate("Form", "wild"))
 
     def resizeEvent(self, event) -> None:
         self.overlay.setGeometry(0, 0, self.parent().width(), self.parent().height())  # Adjust overlay size dynamically
         super().resizeEvent(event)
 
     def toggleVisibleOverlay(self):
+        """
+        Change the state of "self.overlay" after clicking the button that opens the list of dishes.
+        Opens the list of dishes to choose from and sets the background to full width black
+
+        :return: "self.overlay.show()" or "self.overlay.hide()"
+        """
         if not self.overlay.isVisible():
+            self.overlay.raise_()
             self.overlay.show()
         else:
             self.overlay.hide()
 
     def change_name_btn(self, name_list):
+        """
+        the function changes the state of the button name and icon after selecting a dish from the list of dishes.
+
+        :param name_list: data from selected dish
+        :return: changes the name of the button and icon, amount calories label and unit calories label
+        """
         if name_list:
             self.selectBtnFood.setText(name_list[0])
-            self.label_kcal.setText(str(name_list[1]))
+            self.kcal_amount_label.setText(str(name_list[1]))
             if name_list[1]:
-                self.label_4.setText("Kcal Per Kg")
+                self.kcal_units_label.setText("Kcal Per Kg")
                 self.line.show()
             else:
-                self.label_4.setText("")
+                self.kcal_units_label.setText("")
+                self.line.hide()
         else:
             self.selectBtnFood.setText("SELECT DISH")
-            self.label_kcal.setText("")
+            self.kcal_amount_label.setText("")
 
 
 

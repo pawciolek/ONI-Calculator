@@ -13,12 +13,13 @@ from PyQt6.QtGui import QFontDatabase, QFont
 from src.DataLoader.dataDishesLoader import SortDishes
 
 
-class UI_leftSettings(QtWidgets.QWidget):
+class Left_settings_panel(QtWidgets.QWidget):
     data_updated = QtCore.pyqtSignal(list)
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        # gets information about dishes from the sortDishes() class from dataDishesLoader.py
         self.sorter = SortDishes()
 
         antonF = QFontDatabase.addApplicationFont("../src/assets/font/Anton-Regular.ttf")
@@ -40,28 +41,27 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.frame_main.setMaximumSize(QtCore.QSize(290, 10000))
         self.frame_main.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.frame_main.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.frame_main.setObjectName("frame")
 
         self.verticalLayout_13 = QtWidgets.QVBoxLayout()
         self.verticalLayout_13.setContentsMargins(8, 16, 8, 16)
         self.verticalLayout_13.setSpacing(32)
-        self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.label = QtWidgets.QLabel()
+        self.app_logo = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setMinimumSize(QtCore.QSize(0, 0))
-        self.label.setMaximumSize(QtCore.QSize(134, 80))
-        self.label.setBaseSize(QtCore.QSize(630, 100))
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("../src/assets/img.png"))
-        self.label.setScaledContents(True)
-        self.label.setObjectName("label")
-        self.horizontalLayout_5.addWidget(self.label)
+
+        sizePolicy.setHeightForWidth(self.app_logo.sizePolicy().hasHeightForWidth())
+
+        # ---- application logo ----
+        self.app_logo.setSizePolicy(sizePolicy)
+        self.app_logo.setMinimumSize(QtCore.QSize(0, 0))
+        self.app_logo.setMaximumSize(QtCore.QSize(134, 80))
+        self.app_logo.setBaseSize(QtCore.QSize(630, 100))
+        self.app_logo.setText("")
+        self.app_logo.setPixmap(QtGui.QPixmap("../src/assets/img.png"))
+        self.app_logo.setScaledContents(True)
+        self.app_logo.setObjectName("label")
+        self.horizontalLayout_5.addWidget(self.app_logo)
+
         self.verticalLayout_13.addLayout(self.horizontalLayout_5)
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
         self.verticalLayout_7.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
@@ -71,42 +71,42 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label_2 = QtWidgets.QLabel()
+
+        # ---- Settings name Label ----
+        self.settings_label = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setMinimumSize(QtCore.QSize(47, 0))
-        self.label_2.setFont(QFont(antonFont[0], 20))
-        self.label_2.setStyleSheet("color: white;")
-        self.label_2.setScaledContents(False)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout.addWidget(self.label_2)
+        sizePolicy.setHeightForWidth(self.settings_label.sizePolicy().hasHeightForWidth())
+        self.settings_label.setSizePolicy(sizePolicy)
+        self.settings_label.setMinimumSize(QtCore.QSize(47, 0))
+        self.settings_label.setFont(QFont(antonFont[0], 20))
+        self.settings_label.setStyleSheet("color: white;")
+        self.settings_label.setScaledContents(False)
+        self.verticalLayout.addWidget(self.settings_label)
+
         self.line = QtWidgets.QFrame()
         self.line.setStyleSheet("background-color: #3D4358;")
         self.line.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line.setLineWidth(4)
         self.line.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line.setObjectName("line")
+
         self.verticalLayout.addWidget(self.line)
         self.verticalLayout_7.addLayout(self.verticalLayout)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout_3.setSpacing(2)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.label_3 = QtWidgets.QLabel()
+
+        # ---- label name "Dupe population" ----
+        self.pop_label = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setMinimumSize(QtCore.QSize(47, 0))
-        self.label_3.setFont(QFont(antonFont[0], 14))
-        self.label_3.setStyleSheet("color: white;")
-        self.label_3.setScaledContents(False)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout_3.addWidget(self.label_3)
+        sizePolicy.setHeightForWidth(self.pop_label.sizePolicy().hasHeightForWidth())
+        self.pop_label.setSizePolicy(sizePolicy)
+        self.pop_label.setMinimumSize(QtCore.QSize(47, 0))
+        self.pop_label.setFont(QFont(antonFont[0], 14))
+        self.pop_label.setStyleSheet("color: white;")
+        self.pop_label.setScaledContents(False)
+        self.verticalLayout_3.addWidget(self.pop_label)
+
+        # ---- Dupe population input frame ----
         self.frame = QtWidgets.QFrame()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -123,33 +123,39 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame)
         self.verticalLayout_2.setContentsMargins(8, 4, 8, 4)
         self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.spinBox_2 = QtWidgets.QSpinBox(parent=self.frame)
-        self.spinBox_2.setFont(QFont(antonFont[0], 16))
-        self.spinBox_2.setStyleSheet("border: none;\n"
+
+        # ---- Input variable name ----
+
+        self.quantity_DP_input = QtWidgets.QSpinBox(parent=self.frame)
+        self.quantity_DP_input.setFont(QFont(antonFont[0], 16))
+        self.quantity_DP_input.setStyleSheet("border: none;\n"
 "color: white;\n"
 "text-size: 16px;")
-        self.spinBox_2.setButtonSymbols(QtWidgets.QAbstractSpinBox.ButtonSymbols.NoButtons)
-        self.spinBox_2.setObjectName("spinBox_2")
-        self.verticalLayout_2.addWidget(self.spinBox_2)
+        self.quantity_DP_input.setButtonSymbols(QtWidgets.QAbstractSpinBox.ButtonSymbols.NoButtons)
+        self.verticalLayout_2.addWidget(self.quantity_DP_input)
+
         self.verticalLayout_3.addWidget(self.frame)
         self.verticalLayout_7.addLayout(self.verticalLayout_3)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
         self.verticalLayout_4.setSpacing(2)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.label_4 = QtWidgets.QLabel()
+
+        # ---- label name "bottomless stomach" ----
+
+        self.stomach_label = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
-        self.label_4.setSizePolicy(sizePolicy)
-        self.label_4.setMinimumSize(QtCore.QSize(47, 0))
-        self.label_4.setFont(QFont(antonFont[0], 14))
-        self.label_4.setStyleSheet("color: white;")
-        self.label_4.setScaledContents(False)
-        self.label_4.setObjectName("label_4")
-        self.verticalLayout_4.addWidget(self.label_4)
+        sizePolicy.setHeightForWidth(self.stomach_label.sizePolicy().hasHeightForWidth())
+        self.stomach_label.setSizePolicy(sizePolicy)
+        self.stomach_label.setMinimumSize(QtCore.QSize(47, 0))
+        self.stomach_label.setFont(QFont(antonFont[0], 14))
+        self.stomach_label.setStyleSheet("color: white;")
+        self.stomach_label.setScaledContents(False)
+        self.verticalLayout_4.addWidget(self.stomach_label)
+
+        # ---- Dupe population input frame ----
+
         self.frame_2 = QtWidgets.QFrame()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -166,21 +172,26 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.frame_2)
         self.verticalLayout_5.setContentsMargins(8, 4, 8, 4)
         self.verticalLayout_5.setSpacing(0)
-        self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.spinBox = QtWidgets.QSpinBox(parent=self.frame_2)
-        self.spinBox.setFont(QFont(antonFont[0], 16))
-        self.spinBox.setStyleSheet("border: none;\n"
+
+        # ---- Input variable name ----
+
+        self.val_BS_input = QtWidgets.QSpinBox(parent=self.frame_2)
+        self.val_BS_input.setFont(QFont(antonFont[0], 16))
+        self.val_BS_input.setStyleSheet("border: none;\n"
 "color: white;\n"
 "text-size: 16px;")
-        self.spinBox.setButtonSymbols(QtWidgets.QAbstractSpinBox.ButtonSymbols.NoButtons)
-        self.spinBox.setObjectName("spinBox")
-        self.verticalLayout_5.addWidget(self.spinBox)
+        self.val_BS_input.setButtonSymbols(QtWidgets.QAbstractSpinBox.ButtonSymbols.NoButtons)
+        self.verticalLayout_5.addWidget(self.val_BS_input)
+
+
         self.verticalLayout_4.addWidget(self.frame_2)
         self.verticalLayout_7.addLayout(self.verticalLayout_4)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
         self.verticalLayout_6.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
         self.verticalLayout_6.setSpacing(2)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
+
+
         self.label_5 = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -193,6 +204,8 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.label_5.setScaledContents(False)
         self.label_5.setObjectName("label_5")
         self.verticalLayout_6.addWidget(self.label_5)
+
+        # ---- difficulty combobox ----
         self.comboBox = QtWidgets.QComboBox()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -259,42 +272,44 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.toolButton = QtWidgets.QToolButton()
+
+        # ---- DLC button "Space Out" ----
+
+        self.btn_dlc_SO = QtWidgets.QToolButton()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.toolButton.sizePolicy().hasHeightForWidth())
-        self.toolButton.setSizePolicy(sizePolicy)
-        self.toolButton.setStyleSheet("border:none;")
-        self.toolButton.setText("")
+        sizePolicy.setHeightForWidth(self.btn_dlc_SO.sizePolicy().hasHeightForWidth())
+        self.btn_dlc_SO.setSizePolicy(sizePolicy)
+        self.btn_dlc_SO.setStyleSheet("border:none;")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgSO.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         icon.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgSOClicked.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.On)
         icon.addPixmap(QtGui.QPixmap("../src/assets/btn/imgSOBtn.png"), QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.Off)
         icon.addPixmap(QtGui.QPixmap("../src/assets/btn/imgSOBtnClicked.png"), QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.On)
-        self.toolButton.setIcon(icon)
-        self.toolButton.setIconSize(QtCore.QSize(45, 42))
-        self.toolButton.setCheckable(True)
-        self.toolButton.setChecked(False)
-        self.toolButton.setObjectName("toolButton")
+        self.btn_dlc_SO.setIcon(icon)
+        self.btn_dlc_SO.setIconSize(QtCore.QSize(45, 42))
+        self.btn_dlc_SO.setCheckable(True)
+        self.btn_dlc_SO.setChecked(False)
+        self.btn_dlc_SO.setObjectName("toolButton")
 
-        self.toolButton.toggled.connect(lambda checked, btn=self.toolButton, dlc="Space Out": self.selectedDLC(btn, dlc))
+        # click emit
+        self.btn_dlc_SO.toggled.connect(lambda checked, btn=self.btn_dlc_SO, dlc="Space Out": self.selectedDLC(btn, dlc))
 
-        self.horizontalLayout.addWidget(self.toolButton)
+        self.horizontalLayout.addWidget(self.btn_dlc_SO)
         self.verticalLayout_9.addLayout(self.horizontalLayout)
-        self.label_7 = QtWidgets.QLabel()
+
+        # ---- DLC label name "Space Out" ----
+
+        self.label_dlc_SO = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_7.sizePolicy().hasHeightForWidth())
-        self.label_7.setSizePolicy(sizePolicy)
-        self.label_7.setMinimumSize(QtCore.QSize(47, 0))
-        self.label_7.setFont(QFont(antonFont[0], 12))
-        self.label_7.setStyleSheet("color: white;")
-        self.label_7.setScaledContents(False)
-        self.label_7.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.label_7.setObjectName("label_7")
-        self.verticalLayout_9.addWidget(self.label_7)
+        sizePolicy.setHeightForWidth(self.label_dlc_SO.sizePolicy().hasHeightForWidth())
+        self.label_dlc_SO.setSizePolicy(sizePolicy)
+        self.label_dlc_SO.setMinimumSize(QtCore.QSize(47, 0))
+        self.label_dlc_SO.setFont(QFont(antonFont[0], 12))
+        self.label_dlc_SO.setStyleSheet("color: white;")
+        self.label_dlc_SO.setScaledContents(False)
+        self.label_dlc_SO.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_dlc_SO.setObjectName("label_7")
+        self.verticalLayout_9.addWidget(self.label_dlc_SO)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_9.addItem(spacerItem)
         self.horizontalLayout_4.addLayout(self.verticalLayout_9)
@@ -303,90 +318,92 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.toolButton_2 = QtWidgets.QToolButton()
+
+        # ---- DLC button "Prehistoric Planet Pack" ----
+
+        self.btn_dlc_PPP = QtWidgets.QToolButton()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.toolButton_2.sizePolicy().hasHeightForWidth())
-        self.toolButton_2.setSizePolicy(sizePolicy)
-        self.toolButton_2.setStyleSheet("border: none;")
-        self.toolButton_2.setText("")
+        sizePolicy.setHeightForWidth(self.btn_dlc_PPP.sizePolicy().hasHeightForWidth())
+        self.btn_dlc_PPP.setSizePolicy(sizePolicy)
+        self.btn_dlc_PPP.setStyleSheet("border: none;")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgPPP.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         icon1.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgPPPClicked.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.On)
         icon1.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgPPP.png"), QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.Off)
         icon1.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgPPPClicked.png"), QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.On)
-        self.toolButton_2.setIcon(icon1)
-        self.toolButton_2.setIconSize(QtCore.QSize(45, 42))
-        self.toolButton_2.setCheckable(True)
-        self.toolButton_2.setChecked(False)
-        self.toolButton_2.setObjectName("toolButton_2")
+        self.btn_dlc_PPP.setIcon(icon1)
+        self.btn_dlc_PPP.setIconSize(QtCore.QSize(45, 42))
+        self.btn_dlc_PPP.setCheckable(True)
+        self.btn_dlc_PPP.setChecked(False)
+        self.btn_dlc_PPP.setObjectName("toolButton_2")
 
-        self.toolButton_2.toggled.connect(lambda checked, btn=self.toolButton_2, dlc="Prehistoric Planet Pack": self.selectedDLC(btn, dlc))
+        # click emit
+        self.btn_dlc_PPP.toggled.connect(lambda checked, btn=self.btn_dlc_PPP, dlc="Prehistoric Planet Pack": self.selectedDLC(btn, dlc))
 
-        self.horizontalLayout_2.addWidget(self.toolButton_2)
+        self.horizontalLayout_2.addWidget(self.btn_dlc_PPP)
         self.verticalLayout_10.addLayout(self.horizontalLayout_2)
-        self.label_8 = QtWidgets.QLabel()
+
+        # ---- DLC label name "Prehistoric Planet Pack" ----
+
+        self.label_dlc_PPP = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_8.sizePolicy().hasHeightForWidth())
-        self.label_8.setSizePolicy(sizePolicy)
-        self.label_8.setMinimumSize(QtCore.QSize(47, 0))
-        self.label_8.setFont(QFont(antonFont[0], 12))
-        self.label_8.setStyleSheet("color: white;")
-        self.label_8.setScaledContents(False)
-        self.label_8.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.label_8.setObjectName("label_8")
-        self.verticalLayout_10.addWidget(self.label_8)
+        sizePolicy.setHeightForWidth(self.label_dlc_PPP.sizePolicy().hasHeightForWidth())
+        self.label_dlc_PPP.setSizePolicy(sizePolicy)
+        self.label_dlc_PPP.setMinimumSize(QtCore.QSize(47, 0))
+        self.label_dlc_PPP.setFont(QFont(antonFont[0], 12))
+        self.label_dlc_PPP.setStyleSheet("color: white;")
+        self.label_dlc_PPP.setScaledContents(False)
+        self.label_dlc_PPP.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_10.addWidget(self.label_dlc_PPP)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_10.addItem(spacerItem1)
+
         self.horizontalLayout_4.addLayout(self.verticalLayout_10)
         self.verticalLayout_11 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.toolButton_3 = QtWidgets.QToolButton()
+
+        # ---- DLC button "Frosty Planet Pack" ----
+
+        self.btn_dlc_FPP = QtWidgets.QToolButton()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.toolButton_3.sizePolicy().hasHeightForWidth())
-        self.toolButton_3.setSizePolicy(sizePolicy)
-        self.toolButton_3.setStyleSheet("border: none;")
-        self.toolButton_3.setText("")
+        sizePolicy.setHeightForWidth(self.btn_dlc_FPP.sizePolicy().hasHeightForWidth())
+        self.btn_dlc_FPP.setSizePolicy(sizePolicy)
+        self.btn_dlc_FPP.setStyleSheet("border: none;")
+        self.btn_dlc_FPP.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgFPP.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         icon2.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgFPPClicked.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.On)
         icon2.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgFPP.png"), QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.Off)
         icon2.addPixmap(QtGui.QPixmap("../src/assets/btn/dlc/btnImgFPPClicked.png"), QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.On)
-        self.toolButton_3.setIcon(icon2)
-        self.toolButton_3.setIconSize(QtCore.QSize(45, 42))
-        self.toolButton_3.setCheckable(True)
-        self.toolButton_3.setChecked(False)
-        self.toolButton_3.setObjectName("toolButton_3")
+        self.btn_dlc_FPP.setIcon(icon2)
+        self.btn_dlc_FPP.setIconSize(QtCore.QSize(45, 42))
+        self.btn_dlc_FPP.setCheckable(True)
+        self.btn_dlc_FPP.setChecked(False)
 
-        self.toolButton_3.toggled.connect(lambda checked, btn=self.toolButton_3, dlc="Frosty Planet Pack": self.selectedDLC(btn, dlc))
+        # click emit
+        self.btn_dlc_FPP.toggled.connect(lambda checked, btn=self.btn_dlc_FPP, dlc="Frosty Planet Pack": self.selectedDLC(btn, dlc))
 
-        self.horizontalLayout_3.addWidget(self.toolButton_3)
+        self.horizontalLayout_3.addWidget(self.btn_dlc_FPP)
         self.verticalLayout_11.addLayout(self.horizontalLayout_3)
-        self.label_9 = QtWidgets.QLabel()
+
+        # ---- DLC label name "Frosty Planet Pack" ----
+
+        self.label_dlc_FPP = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
-        self.label_9.setSizePolicy(sizePolicy)
-        self.label_9.setMinimumSize(QtCore.QSize(47, 0))
-        self.label_9.setFont(QFont(antonFont[0], 12))
-        self.label_9.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.DefaultContextMenu)
-        self.label_9.setStyleSheet("color: white;")
-        self.label_9.setScaledContents(False)
-        self.label_9.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.label_9.setObjectName("label_9")
-        self.verticalLayout_11.addWidget(self.label_9)
+        sizePolicy.setHeightForWidth(self.label_dlc_FPP.sizePolicy().hasHeightForWidth())
+        self.label_dlc_FPP.setSizePolicy(sizePolicy)
+        self.label_dlc_FPP.setMinimumSize(QtCore.QSize(47, 0))
+        self.label_dlc_FPP.setFont(QFont(antonFont[0], 12))
+        self.label_dlc_FPP.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.DefaultContextMenu)
+        self.label_dlc_FPP.setStyleSheet("color: white;")
+        self.label_dlc_FPP.setScaledContents(False)
+        self.label_dlc_FPP.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_11.addWidget(self.label_dlc_FPP)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_11.addItem(spacerItem2)
         self.horizontalLayout_4.addLayout(self.verticalLayout_11)
+
         self.verticalLayout_12.addLayout(self.horizontalLayout_4)
         self.verticalLayout_13.addLayout(self.verticalLayout_12)
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
@@ -401,9 +418,9 @@ class UI_leftSettings(QtWidgets.QWidget):
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.label_2.setText(_translate("Form", "Settings"))
-        self.label_3.setText(_translate("Form", "Dupe population"))
-        self.label_4.setText(_translate("Form", "Dupe population"))
+        self.settings_label.setText(_translate("Form", "Settings"))
+        self.pop_label.setText(_translate("Form", "Dupe population"))
+        self.stomach_label.setText(_translate("Form", "bottomless stomach"))
         self.label_5.setText(_translate("Form", "Settings"))
         self.comboBox.setItemText(0, _translate("Form", "Tummyless"))
         self.comboBox.setItemText(1, _translate("Form", "Fasting"))
@@ -411,10 +428,10 @@ class UI_leftSettings(QtWidgets.QWidget):
         self.comboBox.setItemText(3, _translate("Form", "Rumbly Tummies"))
         self.comboBox.setItemText(4, _translate("Form", "Ravenous"))
         self.label_6.setText(_translate("Form", "Settings"))
-        self.label_7.setText(_translate("Form", "Space out!"))
-        self.label_8.setText(_translate("Form", "Prehistoric\n"
+        self.label_dlc_SO.setText(_translate("Form", "Space out!"))
+        self.label_dlc_PPP.setText(_translate("Form", "Prehistoric\n"
 "Planet Pack"))
-        self.label_9.setText(_translate("Form", "Frosty planet pack"))
+        self.label_dlc_FPP.setText(_translate("Form", "Frosty planet pack"))
 
     def selectedDLC(self, btn, dlc):
 
